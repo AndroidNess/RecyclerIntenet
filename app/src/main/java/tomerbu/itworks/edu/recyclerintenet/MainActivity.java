@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 
@@ -59,13 +60,18 @@ public class MainActivity extends AppCompatActivity {
                         Gson gsonDesierializer = new Gson();
 
                         RedditFeed reddit = gsonDesierializer.fromJson(reader, RedditFeed.class);
-                        List<Child> children = reddit.getData().getChildren();
-                        for (Child c : children) {
-                            System.out.println(c.getData().getTitle());
-                            System.out.println(c.getData().getThumbnail());
-                        }
+                        final List<Child> children = reddit.getData().getChildren();
 
 
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //find the ListView->init the adapter->set the adapter
+                                ListView lvReddit = (ListView) findViewById(R.id.lvReddit);
+                                RedditAdapter adapter = new RedditAdapter(children, getLayoutInflater(),getApplicationContext());
+                                lvReddit.setAdapter(adapter);
+                            }
+                        });
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
