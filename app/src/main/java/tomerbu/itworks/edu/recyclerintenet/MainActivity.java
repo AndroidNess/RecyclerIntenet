@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
@@ -67,9 +69,11 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //find the ListView->init the adapter->set the adapter
-                                ListView lvReddit = (ListView) findViewById(R.id.lvReddit);
-                                RedditAdapter adapter = new RedditAdapter(children, getLayoutInflater(),getApplicationContext());
-                                lvReddit.setAdapter(adapter);
+                                RecyclerView rvReddit = (RecyclerView) findViewById(R.id.rvReddit);
+                                RedditRecyclerAdapter adapter =
+                                        new RedditRecyclerAdapter(children, getApplicationContext());
+                                rvReddit.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                rvReddit.setAdapter(adapter);
                             }
                         });
                     } catch (IOException e) {
